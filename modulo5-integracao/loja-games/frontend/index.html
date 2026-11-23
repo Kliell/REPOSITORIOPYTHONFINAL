@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja de Games - Sistema</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@500;600;700&display=swap');
+
+        :root {
+            --bg-dark: #07090e;
+            --card-bg: rgba(13, 18, 30, 0.92);
+            --input-bg: #0a0e17;
+            --neon-cyan: #00f3ff;
+            --neon-purple: #9d4edd;
+            --text-main: #e2e8f0;
+            --text-muted: #64748b;
+            --border-tech: rgba(0, 243, 255, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image:
+                radial-gradient(circle at 50% 0%, rgba(0, 243, 255, 0.08) 0%, transparent 60%),
+                linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 32px 32px, 32px 32px;
+            color: var(--text-main);
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            width: 100%;
+            background: rgba(10, 14, 23, 0.95);
+            border-bottom: 1px solid var(--border-tech);
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-brand {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+
+        .nav-brand span {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-main);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .nav-btn:hover {
+            color: var(--neon-cyan);
+            border-color: var(--border-tech);
+            background: rgba(0, 243, 255, 0.06);
+        }
+
+        .nav-btn.active {
+            color: #05080f;
+            background: var(--neon-cyan);
+            box-shadow: 0 0 14px rgba(0, 243, 255, 0.45);
+        }
+
+        main#app-main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 32px 20px;
+        }
+
+        .home-hero {
+            max-width: 760px;
+            width: 100%;
+            text-align: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-tech);
+            border-top: 3px solid var(--neon-cyan);
+            padding: 48px 36px;
+            box-shadow: 0 0 35px rgba(0, 0, 0, 0.8);
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--neon-cyan);
+            border: 1px solid var(--border-tech);
+            padding: 4px 12px;
+            margin-bottom: 18px;
+        }
+
+        .home-hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 14px;
+            border: none;
+            padding: 0;
+        }
+
+        .home-hero h1 span {
+            color: var(--neon-cyan);
+        }
+
+        .home-hero > p {
+            font-size: 1.15rem;
+            color: #94a3b8;
+            margin-bottom: 32px;
+        }
+
+        .home-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .info-card {
+            background: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 3px solid var(--neon-purple);
+            padding: 24px 20px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .info-card:hover {
+            border-color: var(--neon-cyan);
+            border-left-color: var(--neon-cyan);
+            transform: translateY(-3px);
+            box-shadow: 0 0 18px rgba(0, 243, 255, 0.18);
+        }
+
+        .info-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.05rem;
+            color: var(--neon-cyan);
+            margin-bottom: 8px;
+        }
+
+        .info-card p {
+            font-size: 0.98rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 460px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-tech);
+            border-top: 3px solid var(--neon-cyan);
+            padding: 36px 32px;
+            position: relative;
+            box-shadow: 0 0 35px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 243, 255, 0.1);
+            backdrop-filter: blur(8px);
+        }
+
+        .container::after {
+            content: "SYS // GAME_DB_V1";
+            position: absolute;
+            bottom: 10px;
+            right: 16px;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--neon-cyan);
+            opacity: 0.45;
+        }
+
+        .container h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.55rem;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 28px;
+            text-shadow: 0 0 12px rgba(0, 243, 255, 0.5);
+            border-bottom: 1px solid var(--border-tech);
+            padding-bottom: 14px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--neon-cyan);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        label::before {
+            content: "▸";
+            font-size: 0.85rem;
+            color: var(--neon-purple);
+        }
+
+        input,
+        select {
+            width: 100%;
+            background-color: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-left: 3px solid var(--neon-purple);
+            color: var(--text-main);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            padding: 12px 14px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        input::placeholder {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--neon-cyan);
+            border-left-color: var(--neon-cyan);
+            background-color: #0e1525;
+            box-shadow: 0 0 14px rgba(0, 243, 255, 0.22);
+        }
+
+        select {
+            appearance: none;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300f3ff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 16px;
+        }
+
+        select option {
+            background-color: #0d121e;
+            color: var(--text-main);
+        }
+
+        select option:disabled {
+            color: var(--text-muted);
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        button[type="submit"] {
+            margin-top: 8px;
+            padding: 14px;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            color: #05080f;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            cursor: pointer;
+            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+            transition: all 0.25s ease;
+        }
+
+        button[type="submit"]:hover {
+            background: linear-gradient(90deg, var(--neon-cyan), #38bdf8);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 640px) {
+            .navbar {
+                flex-direction: column;
+                gap: 14px;
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-brand">Liell<span>GAMES</span></div>
+        <nav class="nav-links">
+            <button type="button" class="nav-btn active" data-page="home">Home</button>
+            <button type="button" class="nav-btn" data-page="cadastrar_jogo.html">Cadastrar Jogo</button>
+            <button type="button" class="nav-btn" data-page="cadastrar_plataforma.html">Cadastrar Plataforma</button>
+        </nav>
+    </header>
+
+    <main id="app-main">
+        <section class="home-hero">
+            <span class="badge">SYS // PAINEL ADMINISTRATIVO</span>
+            <h1>Bem-vindo à <span>Liell Games</span></h1>
+            <p>Gerencie o catálogo de títulos, plataformas disponíveis e preços da loja em um único terminal.</p>
+
+            <div class="home-cards">
+                <div class="info-card" onclick="navegar('cadastrar_jogo.html')">
+                    <h3>+ Novo Jogo</h3>
+                    <p>Adicione títulos, gêneros, preços e vincule às plataformas.</p>
+                </div>
+                <div class="info-card" onclick="navegar('cadastrar_plataforma.html')">
+                    <h3>+ Nova Plataforma</h3>
+                    <p>Registre consoles e sistemas operacionais suportados.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
