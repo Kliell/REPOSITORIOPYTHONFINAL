@@ -1,203 +1,58 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loja de Games - Cadastrar Jogo</title>
-    <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@500;600;700&display=swap');
-
-:root {
-    --bg-dark: #07090e;
-    --card-bg: rgba(13, 18, 30, 0.9);
-    --input-bg: #0a0e17;
-    --neon-cyan: #00f3ff;
-    --neon-purple: #9d4edd;
-    --text-main: #e2e8f0;
-    --text-muted: #64748b;
-    --border-tech: rgba(0, 243, 255, 0.25);
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    background-color: var(--bg-dark);
-    /* Grid cibernético sutil no fundo */
-    background-image: 
-        radial-gradient(circle at 50% 0%, rgba(0, 243, 255, 0.08) 0%, transparent 60%),
-        linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
-    background-size: 100% 100%, 32px 32px, 32px 32px;
-    color: var(--text-main);
-    font-family: 'Rajdhani', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.container {
-    width: 100%;
-    max-width: 460px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-tech);
-    border-top: 3px solid var(--neon-cyan);
-    padding: 36px 32px;
-    position: relative;
-    box-shadow: 0 0 35px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 243, 255, 0.1);
-    backdrop-filter: blur(8px);
-}
-
-.container::after {
-    content: "SYS // GAME_DB_V1";
-    position: absolute;
-    bottom: 10px;
-    right: 16px;
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    color: var(--neon-cyan);
-    opacity: 0.45;
-}
-
-h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.55rem;
-    text-transform: uppercase;
-    letter-spacing: 2.5px;
-    color: #ffffff;
-    text-align: center;
-    margin-bottom: 28px;
-    text-shadow: 0 0 12px rgba(0, 243, 255, 0.5);
-    border-bottom: 1px solid var(--border-tech);
-    padding-bottom: 14px;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-label {
-    font-size: 0.9rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--neon-cyan);
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-label::before {
-    content: "▸";
-    font-size: 0.85rem;
-    color: var(--neon-purple);
-}
-
-input,
-select {
-    width: 100%;
-    background-color: var(--input-bg);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-left: 3px solid var(--neon-purple);
-    color: var(--text-main);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1.05rem;
-    font-weight: 600;
-    padding: 12px 14px;
-    margin-bottom: 20px;
-    outline: none;
-    transition: all 0.25s ease;
-}
-
-input::placeholder {
-    color: var(--text-muted);
-    font-weight: 500;
-}
-
-input:focus,
-select:focus {
-    border-color: var(--neon-cyan);
-    border-left-color: var(--neon-cyan);
-    background-color: #0e1525;
-    box-shadow: 0 0 14px rgba(0, 243, 255, 0.22);
-}
-
-select {
-    appearance: none;
-    cursor: pointer;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300f3ff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    background-size: 16px;
-}
-
-select option {
-    background-color: #0d121e;
-    color: var(--text-main);
-}
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-button[type="submit"] {
-    margin-top: 8px;
-    padding: 14px;
-    background: linear-gradient(90deg, #00c6ff, #0072ff);
-    color: #05080f;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    border: none;
-    cursor: pointer;
-    clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
-    transition: all 0.25s ease;
-}
-
-button[type="submit"]:hover {
-    background: linear-gradient(90deg, var(--neon-cyan), #38bdf8);
-    box-shadow: 0 0 20px rgba(0, 243, 255, 0.6);
-    transform: translateY(-2px);
-}
-
-button[type="submit"]:active {
-    transform: translateY(0);
-}
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Cadastrar Jogo</h1>
-        <form"> 
-            <label for="titulo">Título</label>
-            <input type="text" id="titulo" placeholder="EX: GTA VI">
 
-            <label for="genero">Gênero</label>
-            <input type="text" id="genero" placeholder="EX: Ação">
+    <header class="topo">
+        <span class="logo">Loja de Games</span>
+        <nav>
+            <a href="index.html">Catálogo</a>
+            <a href="cadastrar_jogo.html" class="ativo">Novo jogo</a>
+            <a href="plataformas.html">Plataformas</a>
+        </nav>
+    </header>
 
-            <label for="preco">Preço</label>
-            <input type="number" id="preco" placeholder="EX: R$ 699,99" step="0.01">
-            
-            <label for="plataforma">Plataforma</label>
-            <select id="plataforma">
-                <option value="" disabled selected>-- Selecione --</option>
-                <option value="1">Playstation 5</option>
-                <option value="2">Xbox Series X</option>
-                <option value="3">PC</option>
-            </select> 
-            <button type="submit">Cadastrar</button>
-        </form>
-    </div>
+    <main class="pagina">
+        <div class="cartao estreito">
+            <h1 id="titulo-pagina">Cadastrar Jogo</h1>
+            <br>
+
+            <!-- O JavaScript escreve aqui: sucesso ou erro devolvido pela API -->
+            <p id="mensagem" class="mensagem"></p>
+
+            <form id="form-jogo">
+                <label for="titulo">Título</label>
+                <input type="text" id="titulo" placeholder="Ex: GTA VI">
+                <p class="campo-erro" id="erro-titulo"></p>
+
+                <label for="genero">Gênero</label>
+                <input type="text" id="genero" placeholder="Ex: Ação">
+
+                <label for="preco">Preço (R$)</label>
+                <input type="number" id="preco" placeholder="Ex: 199.90" step="0.01">
+                <p class="campo-erro" id="erro-preco"></p>
+
+                <label for="plataforma">Plataforma</label>
+                <!-- O JavaScript cria as <option> a partir da API -->
+                <select id="plataforma">
+                    <option value="">-- Selecione --</option>
+                </select>
+                <p class="campo-erro" id="erro-plataforma"></p>
+
+                <button type="submit" id="btn-salvar" class="btn btn-bloco">Cadastrar</button>
+            </form>
+
+            <br>
+            <a class="btn btn-secundario btn-bloco" href="index.html" style="text-align:center">Voltar ao catálogo</a>
+        </div>
+    </main>
+
+    <script src="js/config.js"></script>
+    <script src="js/cadastrar_jogo.js"></script>
 </body>
 </html>
