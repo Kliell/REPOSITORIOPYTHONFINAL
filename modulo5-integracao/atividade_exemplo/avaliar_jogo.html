@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja de Games - Avaliar Jogo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@500;600;700&display=swap');
+
+        :root {
+            --bg-dark: #07090e;
+            --card-bg: rgba(13, 18, 30, 0.92);
+            --input-bg: #0a0e17;
+            --neon-cyan: #00f3ff;
+            --neon-purple: #9d4edd;
+            --text-main: #e2e8f0;
+            --text-muted: #64748b;
+            --border-tech: rgba(0, 243, 255, 0.25);
+            --error-color: #ff4d6d;
+            --success-color: #00f5a0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image:
+                radial-gradient(circle at 50% 0%, rgba(0, 243, 255, 0.08) 0%, transparent 60%),
+                linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 32px 32px, 32px 32px;
+            color: var(--text-main);
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 460px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-tech);
+            border-top: 3px solid var(--neon-cyan);
+            padding: 36px 32px;
+            position: relative;
+            box-shadow: 0 0 35px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 243, 255, 0.1);
+            backdrop-filter: blur(8px);
+        }
+
+        .container::after {
+            content: "SYS // GAME_DB_V1";
+            position: absolute;
+            bottom: 10px;
+            right: 16px;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--neon-cyan);
+            opacity: 0.45;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.55rem;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 28px;
+            text-shadow: 0 0 12px rgba(0, 243, 255, 0.5);
+            border-bottom: 1px solid var(--border-tech);
+            padding-bottom: 14px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--neon-cyan);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        label::before {
+            content: "▸";
+            font-size: 0.85rem;
+            color: var(--neon-purple);
+        }
+
+        input {
+            width: 100%;
+            background-color: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-left: 3px solid var(--neon-purple);
+            color: var(--text-main);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            padding: 12px 14px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        input::placeholder {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        input:focus {
+            border-color: var(--neon-cyan);
+            border-left-color: var(--neon-cyan);
+            background-color: #0e1525;
+            box-shadow: 0 0 14px rgba(0, 243, 255, 0.22);
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        button[type="submit"] {
+            margin-top: 8px;
+            padding: 14px;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            color: #05080f;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            cursor: pointer;
+            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+            transition: all 0.25s ease;
+        }
+
+        button[type="submit"]:hover {
+            background: linear-gradient(90deg, var(--neon-cyan), #38bdf8);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        .mensagem-erro {
+            margin-top: 16px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--error-color);
+            line-height: 1.45;
+            white-space: pre-line;
+        }
+
+        .mensagem-sucesso {
+            margin-top: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--success-color);
+            line-height: 1.45;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Avaliar Jogo</h1>
+        <form id="form-avaliacao" novalidate>
+            <label for="comentario">Comentário</label>
+            <input type="text" id="comentario" placeholder="EX: Jogabilidade fluida e trilha incrível">
+
+            <label for="nota">Nota (1 a 5)</label>
+            <input type="number" id="nota" placeholder="EX: 5" min="1" max="5" step="1">
+
+            <button type="submit">Enviar Avaliação</button>
+
+            <p id="mensagem-erro" class="mensagem-erro"></p>
+            <p id="mensagem-sucesso" class="mensagem-sucesso"></p>
+        </form>
+    </div>
+
+    <script>
+        function configurarFormularioAvaliacao() {
+            const form = document.getElementById('form-avaliacao');
+            if (!form || form.dataset.bound === 'true') return;
+
+            form.dataset.bound = 'true';
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const campoComentario = document.getElementById('comentario');
+                const campoNota = document.getElementById('nota');
+                const erroEl = document.getElementById('mensagem-erro');
+                const sucessoEl = document.getElementById('mensagem-sucesso');
+
+                // Limpa mensagens anteriores antes de validar
+                erroEl.textContent = '';
+                sucessoEl.textContent = '';
+
+                const comentario = campoComentario.value.trim();
+                const notaBruta = campoNota.value.trim();
+                const nota = Number(notaBruta);
+
+                const erros = [];
+
+                if (comentario === '') {
+                    erros.push('Comentário: o campo não pode estar vazio.');
+                }
+
+                if (notaBruta === '' || Number.isNaN(nota) || nota < 1 || nota > 5) {
+                    erros.push('Nota: informe um número entre 1 e 5.');
+                }
+
+                if (erros.length > 0) {
+                    erroEl.textContent = erros.join('\n');
+                    return;
+                }
+
+                const dadosAvaliacao = { comentario, nota };
+                console.log(dadosAvaliacao);
+
+                sucessoEl.textContent = 'Avaliação registrada com sucesso! Dados enviados para o console.';
+                form.reset();
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', configurarFormularioAvaliacao);
+        configurarFormularioAvaliacao();
+    </script>
+</body>
+</html>
